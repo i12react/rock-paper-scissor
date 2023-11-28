@@ -90,5 +90,5 @@ function decideWinner() {
 }
 
 console.log("===============");
-game();
+// game();
 console.log("===============");
