@@ -12,57 +12,75 @@ function playRound(playerSelection, computerSelection) {
     if(/rock/i .test(playerSelection) && computerSelection == "rock")
     {
         roundResult = "Draw!";
-        return roundResult;
+        keepCount();
+        console.log(roundResult);
     }
     else if(/rock/i .test(playerSelection) && computerSelection == "paper")
     {
         roundResult = "You Lose! Paper beats Rock!";
-        return roundResult;
+        keepCount();
+        console.log(roundResult);
     }
     else if(/rock/i .test(playerSelection) && computerSelection == "scissor")
     {
         roundResult = "You Win! Rock beats Scissor!";
-        return roundResult;
+        keepCount();
+        console.log(roundResult);
     }
     else if(/paper/i.test(playerSelection) && computerSelection == "rock")
     {
         roundResult = "You Win! Paper beats Rock!";
-        return roundResult;
+        keepCount();
+        console.log(roundResult);
     }
     else if(/paper/i.test(playerSelection) && computerSelection == "paper")
     {
         roundResult = "Draw!";
-        return roundResult;
+        keepCount();
+        console.log(roundResult);
     }
     else if(/paper/i.test(playerSelection) && computerSelection == "scissor")
     {
         roundResult = "You Lose! Scissor beats Paper!";
-        return roundResult;
+        keepCount();
+        console.log(roundResult);
     }
     else if(/scissor/i.test(playerSelection) && computerSelection == "rock")
     {
         roundResult = "You Lose! Rock beats Scissor!";
-        return roundResult;
+        keepCount();
+        console.log(roundResult);
     }
     else if(/scissor/i.test(playerSelection) && computerSelection == "paper")
     {
         roundResult = "You Win! Scissor beats Paper!";
-        return roundResult;
+        keepCount();
+        console.log(roundResult);
     }
     else if(/scissor/i.test(playerSelection) && computerSelection == "scissor")
     {
         roundResult = "Draw!";
-        return roundResult;
-    }
-}
-function game() {
-    for(let i = 0; i < 5; i++) {
-        let player = prompt("Input rock, paper or scissor!");
-        console.log(playRound(player, getComputerChoice()));
         keepCount();
+        console.log(roundResult);
     }
-    console.log(decideWinner());
+    const resultText = document.createElement("p");
+    resultText.textContent = roundResult;
+    const resultContainer = document.querySelector(".result");
+    resultContainer.appendChild(resultText);
+
+    updateScore();
+
+    if(gameOver()) {
+        const finalDisplayText = document.createElement("p");
+        finalDisplayText.textContent = decideWinner();
+        resultContainer.appendChild(finalDisplayText);
+
+        rockBtn.disabled = true;
+        paperBtn.disabled = true;
+        scissorBtn.disabled = true;
+    }
 }
+
 function keepCount() {
     if(/You Win!/i.test(roundResult)) {
         playerScore++;
@@ -88,7 +106,27 @@ function decideWinner() {
         return `Draw! ${playerScore} to ${computerScore}`;
     }
 }
+function updateScore() {
+    const playerScoreDisplay = document.getElementById("playerScore");
+    const computerScoreDisplay = document.getElementById("compScore");
+    const drawScoreDisplay = document.getElementById("drawScore");
+    playerScoreDisplay.textContent = `Player score is: ${playerScore}`;
+    computerScoreDisplay.textContent = `Computer score is: ${computerScore}`;
+    drawScoreDisplay.textContent = `Draw score is: ${drawScore}`;
 
+}
 console.log("===============");
-// game();
 console.log("===============");
+
+//UI
+const rockBtn = document.getElementById("rockBtn");
+const paperBtn = document.getElementById("paperBtn");
+const scissorBtn = document.getElementById("scissorBtn");
+function gameOver() {
+    return playerScore === 5 || computerScore === 5;
+}
+
+rockBtn.addEventListener('click', () => playRound('ROCK', getComputerChoice()));
+paperBtn.addEventListener('click', () => playRound('PAPER', getComputerChoice()));
+scissorBtn.addEventListener('click', () => playRound('SCISSOR', getComputerChoice()));
+
